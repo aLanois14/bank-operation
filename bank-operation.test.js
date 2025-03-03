@@ -29,4 +29,24 @@ describe("BankOperation", function () {
       expect(actionDepot).toThrow();
     });
   });
+
+  describe("Retrait d'argent", function () {
+    test("On retire 10", function () {
+      //GIVEN
+      const account = new BankAccount(100);
+      //WHEN
+      account.withdraw(10);
+      //THEN
+      expect(account.getBalance()).toBe(90);
+    });
+
+    test("On retire plus que le solde", function () {
+      //GIVEN
+      const account = new BankAccount(100);
+      //WHEN
+      const actionRetrait = () => account.withdraw(-200);
+      //THEN
+      expect(actionRetrait).toThrow();
+    });
+  });
 });
