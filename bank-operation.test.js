@@ -19,5 +19,14 @@ describe("BankOperation", function () {
       //THEN
       expect(account.getBalance()).toBe(110);
     });
+
+    test("On dépose -10€", function () {
+      //GIVEN
+      const account = new BankAccount(100);
+      //WHEN
+      const actionDepot = () => account.deposit(-10);
+      //THEN
+      expect(actionDepot).toThrow();
+    });
   });
 });
