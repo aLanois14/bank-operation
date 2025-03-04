@@ -8,7 +8,7 @@ describe("BankOperation", function () {
   beforeAll(() => {
     jest.spyOn(global.Date, "now").mockImplementation(() => mockDate.getTime());
     jest.spyOn(global, "fetch").mockResolvedValue({
-      ok: false,
+      ok: true,
       json: async () => ({ success: true }),
     });
     account = new BankAccount(100);
