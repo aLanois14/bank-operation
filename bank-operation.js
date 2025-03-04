@@ -1,5 +1,5 @@
 async function transfer(from, to, amount) {
-  if (!from || !to) throw new Error("Champ manquant");
+  if (champsValides(from, to, amount)) throw new Error("Champ manquant");
   if (amount <= 0) throw new Error("Le montant du transfert doit être positif");
 
   const response = await fetch("https://api.bank.com/transfer", {
@@ -12,6 +12,10 @@ async function transfer(from, to, amount) {
     throw new Error("Erreur lors du transfert");
   }
   return true;
+}
+
+function champsValides(from, to, amount) {
+  return !from || !to || !amount;
 }
 
 module.exports = transfer;
