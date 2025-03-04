@@ -14,7 +14,7 @@ describe("BankOperation", function () {
   });
 
   test("On regarde le solde du compte", function () {
-    //GIVEN
+    //GIVEN : un compte avec un solde de 100€
     //WHEN
     const balance = account.getBalance();
     //THEN
@@ -23,7 +23,7 @@ describe("BankOperation", function () {
 
   describe("Dépôt d'argent", function () {
     test("On dépose 10", function () {
-      //GIVEN
+      //GIVEN un compte avec un solde de 100€
       //WHEN
       account.deposit(10);
       //THEN
@@ -33,7 +33,7 @@ describe("BankOperation", function () {
     });
 
     test("On dépose -10€", function () {
-      //GIVEN
+      //GIVEN un compte avec un solde de 110€
       //WHEN
       const actionDepot = () => account.deposit(-10);
       //THEN
@@ -44,7 +44,7 @@ describe("BankOperation", function () {
 
   describe("Retrait d'argent", function () {
     test("On retire 10", function () {
-      //GIVEN
+      //GIVEN un compte avec un solde de 110€
       //WHEN
       account.withdraw(10);
       //THEN
@@ -53,7 +53,7 @@ describe("BankOperation", function () {
     });
 
     test("On retire plus que le solde", function () {
-      //GIVEN
+      //GIVEN un compte avec un solde de 100€
       //WHEN
       const actionRetrait = () => account.withdraw(110);
       //THEN
@@ -62,7 +62,7 @@ describe("BankOperation", function () {
     });
 
     test("On retire un solde négatif", function () {
-      //GIVEN
+      //GIVEN un compte avec un solde de 100€
       //WHEN
       const actionRetrait = () => account.withdraw(-10);
       //THEN
