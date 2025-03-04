@@ -15,6 +15,7 @@ class BankAccount {
       type: "dépôt",
       amount,
       balance: this.balance,
+      date: new Date(),
     });
   }
 
@@ -29,6 +30,7 @@ class BankAccount {
       type: "retrait",
       amount,
       balance: this.balance,
+      date: new Date(),
     });
   }
 

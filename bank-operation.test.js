@@ -2,9 +2,15 @@ const BankAccount = require("./bank-account");
 
 describe("BankOperation", function () {
   let account;
+  const mockDate = new Date("2024-03-04T12:00:00Z");
 
   beforeAll(() => {
+    jest.spyOn(global.Date, "now").mockImplementation(() => mockDate.getTime());
     account = new BankAccount(100); // On initialise un compte avec 100€
+  });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
   });
 
   test("On regarde le solde du compte", function () {
