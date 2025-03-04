@@ -7,6 +7,10 @@ describe("BankOperation", function () {
 
   beforeAll(() => {
     jest.spyOn(global.Date, "now").mockImplementation(() => mockDate.getTime());
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true, // Simule une réponse API réussie
+      json: async () => ({ success: true }),
+    });
     account = new BankAccount(100); // On initialise un compte avec 100€
   });
 
@@ -73,35 +77,41 @@ describe("BankOperation", function () {
   });
 
   describe("Transfert d'argent", function () {
-    test("Champ manquant", function () {
+    test("Champ manquant", async function () {
       //GIVEN
       const from = "";
       const to = "";
       const amount = 10;
       //WHEN
-      const actionTransfer = () => transfer(from, to, amount);
-      //THEN
-      expect(actionTransfer).toThrow();
+      const actionTransfer = async () => await transfer(from, to, amount);
+
+      // THEN
+      await expect(actionTransfer()).rejects.toThrow("Champ manquant");
+      expect(global.fetch).not.toHaveBeenCalled();
     });
 
-    test("Montant négatif", function () {
+    test("Montant négatif", async function () {
       //GIVEN
       const from = "IB";
       const to = "BIC";
       const amount = -10;
       //WHEN
-      const actionTransfer = () => transfer(from, to, amount);
-      //THEN
-      expect(actionTransfer).toThrow();
+      const actionTransfer = async () => await transfer(from, to, amount);
+
+      // THEN
+      await expect(actionTransfer()).rejects.toThrow(
+        "Le montant du transfert doit être positif"
+      );
+      expect(global.fetch).not.toHaveBeenCalled();
     });
 
-    test("Transfert valide", function () {
+    test("Transfert valide", async function () {
       //GIVEN
       const from = "IB";
       const to = "BIC";
       const amount = 10;
       //WHEN
-      const actionTransfer = transfer(from, to, amount);
+      const actionTransfer = await transfer(from, to, amount);
       //THEN
       expect(actionTransfer).toBe(true);
     });
