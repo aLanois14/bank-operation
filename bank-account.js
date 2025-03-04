@@ -13,7 +13,11 @@ class BankAccount {
   }
 
   withdraw(amount) {
-    if (amount <= 0) throw new Error("Le solde est insuffisant");
+    if (amount <= 0) throw new Error("Le retrait ne doit pas être négatif");
+    if (amount > this.balance)
+      throw new Error(
+        "Vous ne pouvez pas retirer plus que le solde de votre compte"
+      );
     this.balance -= amount;
   }
 }

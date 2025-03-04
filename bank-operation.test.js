@@ -1,9 +1,14 @@
 const BankAccount = require("./bank-account");
 
 describe("BankOperation", function () {
+  let account;
+
+  beforeEach(() => {
+    account = new BankAccount(100); // On initialise un compte avec 100€
+  });
+
   test("On regarde le solde du compte", function () {
     //GIVEN
-    const account = new BankAccount(100);
     //WHEN
     const balance = account.getBalance();
     //THEN
@@ -13,7 +18,6 @@ describe("BankOperation", function () {
   describe("Dépôt d'argent", function () {
     test("On dépose 10", function () {
       //GIVEN
-      const account = new BankAccount(100);
       //WHEN
       account.deposit(10);
       //THEN
@@ -22,7 +26,6 @@ describe("BankOperation", function () {
 
     test("On dépose -10€", function () {
       //GIVEN
-      const account = new BankAccount(100);
       //WHEN
       const actionDepot = () => account.deposit(-10);
       //THEN
@@ -33,7 +36,6 @@ describe("BankOperation", function () {
   describe("Retrait d'argent", function () {
     test("On retire 10", function () {
       //GIVEN
-      const account = new BankAccount(100);
       //WHEN
       account.withdraw(10);
       //THEN
@@ -42,9 +44,16 @@ describe("BankOperation", function () {
 
     test("On retire plus que le solde", function () {
       //GIVEN
-      const account = new BankAccount(100);
       //WHEN
-      const actionRetrait = () => account.withdraw(-200);
+      const actionRetrait = () => account.withdraw(110);
+      //THEN
+      expect(actionRetrait).toThrow();
+    });
+
+    test("On retire un solde négatif", function () {
+      //GIVEN
+      //WHEN
+      const actionRetrait = () => account.withdraw(-10);
       //THEN
       expect(actionRetrait).toThrow();
     });
