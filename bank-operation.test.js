@@ -8,10 +8,10 @@ describe("BankOperation", function () {
   beforeAll(() => {
     jest.spyOn(global.Date, "now").mockImplementation(() => mockDate.getTime());
     jest.spyOn(global, "fetch").mockResolvedValue({
-      ok: true, // Simule une réponse API réussie
+      ok: false,
       json: async () => ({ success: true }),
     });
-    account = new BankAccount(100); // On initialise un compte avec 100€
+    account = new BankAccount(100);
   });
 
   afterAll(() => {
