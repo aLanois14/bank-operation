@@ -1,4 +1,5 @@
 const BankAccount = require("./bank-account");
+const transfer = require("./bank-operation");
 
 describe("BankOperation", function () {
   let account;
@@ -68,6 +69,41 @@ describe("BankOperation", function () {
       //THEN
       expect(actionRetrait).toThrow();
       expect(account.getTransactions()).toHaveLength(2);
+    });
+  });
+
+  describe("Transfert d'argent", function () {
+    test("Champ manquant", function () {
+      //GIVEN
+      const from = "";
+      const to = "";
+      const amount = 10;
+      //WHEN
+      const actionTransfer = () => transfer(from, to, amount);
+      //THEN
+      expect(actionTransfer).toThrow();
+    });
+
+    test("Montant négatif", function () {
+      //GIVEN
+      const from = "IB";
+      const to = "BIC";
+      const amount = -10;
+      //WHEN
+      const actionTransfer = () => transfer(from, to, amount);
+      //THEN
+      expect(actionTransfer).toThrow();
+    });
+
+    test("Transfert valide", function () {
+      //GIVEN
+      const from = "IB";
+      const to = "BIC";
+      const amount = 10;
+      //WHEN
+      const actionTransfer = transfer(from, to, amount);
+      //THEN
+      expect(actionTransfer).toBe(true);
     });
   });
 });
