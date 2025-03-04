@@ -22,6 +22,8 @@ describe("BankOperation", function () {
       account.deposit(10);
       //THEN
       expect(account.getBalance()).toBe(110);
+
+      expect(BankAccount.transactions).toHaveLength(1);
     });
 
     test("On dépose -10€", function () {
@@ -30,6 +32,7 @@ describe("BankOperation", function () {
       const actionDepot = () => account.deposit(-10);
       //THEN
       expect(actionDepot).toThrow();
+      expect(BankAccount.transactions).toHaveLength(1);
     });
   });
 
@@ -40,6 +43,7 @@ describe("BankOperation", function () {
       account.withdraw(10);
       //THEN
       expect(account.getBalance()).toBe(90);
+      expect(BankAccount.transactions).toHaveLength(2);
     });
 
     test("On retire plus que le solde", function () {
@@ -48,6 +52,7 @@ describe("BankOperation", function () {
       const actionRetrait = () => account.withdraw(110);
       //THEN
       expect(actionRetrait).toThrow();
+      expect(BankAccount.transactions).toHaveLength(2);
     });
 
     test("On retire un solde négatif", function () {
@@ -56,6 +61,7 @@ describe("BankOperation", function () {
       const actionRetrait = () => account.withdraw(-10);
       //THEN
       expect(actionRetrait).toThrow();
+      expect(BankAccount.transactions).toHaveLength(2);
     });
   });
 });
