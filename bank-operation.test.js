@@ -49,7 +49,7 @@ describe("BankOperation", function () {
     test("On retire plus que le solde", function () {
       //GIVEN
       //WHEN
-      const actionRetrait = () => account.withdraw(110);
+      const actionRetrait = () => account.withdraw(200);
       //THEN
       expect(actionRetrait).toThrow();
       expect(BankAccount.transactions).toHaveLength(2);
